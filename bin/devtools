@@ -1,0 +1,28 @@
+#!/usr/bin/env php
+<?php
+declare(strict_types=1);
+
+use MyOnlineStore\DevTools\Configuration;
+use MyOnlineStore\DevTools\DevTools;
+use Symfony\Component\Console\Application;
+
+$autoloadLocations = [
+    __DIR__ . '/../vendor/autoload.php',    // From bin
+    __DIR__ . '/../autoload.php',           // From vendor/bin
+    __DIR__ . '/../../../autoload.php',     // From vendor/myonlinestore/php-devtools/bin
+];
+
+foreach ($autoloadLocations as $location) {
+    if (is_file($location)) {
+        require $location;
+
+        break;
+    }
+}
+
+$devTools = new DevTools(new Configuration());
+
+$application = new Application('MyOnlineStore PHP Dev Tools');
+$application->addCommands($devTools->getCommands());
+$application->setDefaultCommand('analyze');
+$application->run();

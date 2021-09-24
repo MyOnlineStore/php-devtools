@@ -1,0 +1,48 @@
+name: Test
+
+on: push
+
+jobs:
+    setup:
+        runs-on: ubuntu-latest
+        steps:
+            -   uses: actions/checkout@v2
+            -   uses: shivammathur/setup-php@v2
+                with:
+                    php-version: 8.0
+                    coverage: none
+            -   uses: actions/cache@v2
+                with:
+                    path: vendor
+                    key: php-8.0-vendor-${{ hashFiles('**/composer.json') }}
+                    restore-keys: php-8.0-vendor-
+            -   run: composer install --no-interaction --no-ansi --no-suggest
+            -   id: set-php-versions
+                run: echo "::set-output name=php-versions::$(bin/devtools list:php-versions)"
+            -   id: set-tools
+                run: echo "::set-output name=tools::$(bin/devtools list:enabled-tools)"
+        outputs:
+            php-versions: ${{ steps.set-php-versions.outputs.php-versions }}
+            tools: ${{ steps.set-tools.outputs.tools }}
+
+    test:
+        needs: setup
+        runs-on: ubuntu-latest
+        strategy:
+            matrix:
+                php-version: ${{ fromJson(needs.setup.outputs.php-versions) }}
+                tool: ${{ fromJson(needs.setup.outputs.tools) }}
+            fail-fast: false
+        steps:
+            -   uses: actions/checkout@v2
+            -   uses: shivammathur/setup-php@v2
+                with:
+                    php-version: ${{ matrix.php-version }}
+            -   uses: actions/cache@v2
+                with:
+                    path: vendor
+                    key: php-${{ matrix.php-version }}-vendor-${{ hashFiles('**/composer.json') }}
+                    restore-keys: php-${{ matrix.php-version }}-vendor-
+            -   run: composer install --no-interaction --no-ansi --no-suggest
+
+            -   run: bin/devtools ${{ matrix.tool }}
