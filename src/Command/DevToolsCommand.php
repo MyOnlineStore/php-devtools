@@ -27,7 +27,11 @@ abstract class DevToolsCommand extends Command
             \array_merge(
                 $this->getCommand(),
                 (array) ($input->getArguments()['args'] ?? [])
-            )
+            ),
+            null,
+            null,
+            null,
+            null
         );
         $process->start();
 
