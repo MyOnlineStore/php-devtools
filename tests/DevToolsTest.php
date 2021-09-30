@@ -6,6 +6,7 @@ namespace MyOnlineStore\DevTools\Tests;
 use MyOnlineStore\DevTools\Command\AnalyzeCommand;
 use MyOnlineStore\DevTools\Command\CodesnifferCommand;
 use MyOnlineStore\DevTools\Command\LintSymfonyContainerCommand;
+use MyOnlineStore\DevTools\Command\LintYamlCommand;
 use MyOnlineStore\DevTools\Command\ListPhpVersionsCommand;
 use MyOnlineStore\DevTools\Command\ListToolsCommand;
 use MyOnlineStore\DevTools\Command\PhpUnitCommand;
@@ -36,6 +37,7 @@ final class DevToolsTest extends TestCase
                 new AnalyzeCommand($this->configuration),
                 new CodesnifferCommand($this->configuration),
                 new LintSymfonyContainerCommand($this->configuration),
+                new LintYamlCommand($this->configuration),
                 new ListToolsCommand($this->configuration),
                 new ListPhpVersionsCommand($this->configuration),
                 new PhpUnitCommand($this->configuration),
