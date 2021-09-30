@@ -11,6 +11,7 @@ use MyOnlineStore\DevTools\Command\ListPhpVersionsCommand;
 use MyOnlineStore\DevTools\Command\ListToolsCommand;
 use MyOnlineStore\DevTools\Command\PhpUnitCommand;
 use MyOnlineStore\DevTools\Command\PsalmCommand;
+use MyOnlineStore\DevTools\Command\RoaveInfectionCommand;
 use Symfony\Component\Console\Command\Command;
 
 final class DevTools
@@ -37,6 +38,7 @@ final class DevTools
             new ListPhpVersionsCommand($this->configuration),
             new PhpUnitCommand($this->configuration),
             new PsalmCommand($this->configuration),
+            new RoaveInfectionCommand($this->configuration),
         ];
     }
 }

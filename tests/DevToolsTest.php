@@ -11,6 +11,7 @@ use MyOnlineStore\DevTools\Command\ListPhpVersionsCommand;
 use MyOnlineStore\DevTools\Command\ListToolsCommand;
 use MyOnlineStore\DevTools\Command\PhpUnitCommand;
 use MyOnlineStore\DevTools\Command\PsalmCommand;
+use MyOnlineStore\DevTools\Command\RoaveInfectionCommand;
 use MyOnlineStore\DevTools\Configuration;
 use MyOnlineStore\DevTools\DevTools;
 use PHPUnit\Framework\TestCase;
@@ -42,6 +43,7 @@ final class DevToolsTest extends TestCase
                 new ListPhpVersionsCommand($this->configuration),
                 new PhpUnitCommand($this->configuration),
                 new PsalmCommand($this->configuration),
+                new RoaveInfectionCommand($this->configuration),
             ],
             $this->devTools->getCommands()
         );
