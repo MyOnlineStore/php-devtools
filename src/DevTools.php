@@ -5,6 +5,7 @@ namespace MyOnlineStore\DevTools;
 
 use MyOnlineStore\DevTools\Command\AnalyzeCommand;
 use MyOnlineStore\DevTools\Command\CodesnifferCommand;
+use MyOnlineStore\DevTools\Command\LintSymfonyContainerCommand;
 use MyOnlineStore\DevTools\Command\ListPhpVersionsCommand;
 use MyOnlineStore\DevTools\Command\ListToolsCommand;
 use MyOnlineStore\DevTools\Command\PhpUnitCommand;
@@ -29,6 +30,7 @@ final class DevTools
         return [
             new AnalyzeCommand($this->configuration),
             new CodesnifferCommand($this->configuration),
+            new LintSymfonyContainerCommand($this->configuration),
             new ListToolsCommand($this->configuration),
             new ListPhpVersionsCommand($this->configuration),
             new PhpUnitCommand($this->configuration),

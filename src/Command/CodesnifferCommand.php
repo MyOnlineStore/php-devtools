@@ -3,6 +3,8 @@ declare(strict_types=1);
 
 namespace MyOnlineStore\DevTools\Command;
 
+use MyOnlineStore\DevTools\Configuration;
+
 final class CodesnifferCommand extends DevToolsCommand
 {
     /** @var string|null */
@@ -17,18 +19,13 @@ final class CodesnifferCommand extends DevToolsCommand
     protected function getCommand(): array
     {
         return [
-            $this->withBinPath('phpcs'),
+            $this->withVendorBinPath('phpcs'),
         ];
     }
 
-    /**
-     * @inheritDoc
-     */
-    public static function getPossibleConfigurationFiles(): array
+    public static function isAvailable(Configuration $configuration): bool
     {
-        return [
-            'phpcs.xml.dist',
-            'phpcs.xml',
-        ];
+        return \is_file($configuration->getRootDir() . 'phpcs.xml.dist')
+            || \is_file($configuration->getRootDir() . 'phpcs.xml');
     }
 }

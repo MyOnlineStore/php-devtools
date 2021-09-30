@@ -94,19 +94,17 @@ final class Configuration
         $enabledTools = [];
 
         foreach ($this->gatherAvailableCommands() as $command) {
-            foreach ($command::getPossibleConfigurationFiles() as $configurationFile) {
-                if (!\is_file($this->rootDir . $configurationFile)) {
-                    continue;
-                }
-
-                $commandName = $command::getDefaultName();
-
-                if (!\is_string($commandName)) {
-                    throw new \RuntimeException(\sprintf('Command "%s" has not configured a name', $command));
-                }
-
-                $enabledTools[$commandName] = $command;
+            if (!$command::isAvailable($this)) {
+                continue;
             }
+
+            $commandName = $command::getDefaultName();
+
+            if (!\is_string($commandName)) {
+                throw new \RuntimeException(\sprintf('Command "%s" has not configured a name', $command));
+            }
+
+            $enabledTools[$commandName] = $command;
         }
 
         return $enabledTools;

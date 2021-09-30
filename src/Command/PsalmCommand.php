@@ -3,6 +3,8 @@ declare(strict_types=1);
 
 namespace MyOnlineStore\DevTools\Command;
 
+use MyOnlineStore\DevTools\Configuration;
+
 final class PsalmCommand extends DevToolsCommand
 {
     /** @var string|null */
@@ -17,18 +19,13 @@ final class PsalmCommand extends DevToolsCommand
     protected function getCommand(): array
     {
         return [
-            $this->withBinPath('psalm'),
+            $this->withVendorBinPath('psalm'),
         ];
     }
 
-    /**
-     * @inheritDoc
-     */
-    public static function getPossibleConfigurationFiles(): array
+    public static function isAvailable(Configuration $configuration): bool
     {
-        return [
-            'psalm.xml.dist',
-            'psalm.xml',
-        ];
+        return \is_file($configuration->getRootDir() . 'psalm.xml.dist')
+            || \is_file($configuration->getRootDir() . 'psalm.xml');
     }
 }
