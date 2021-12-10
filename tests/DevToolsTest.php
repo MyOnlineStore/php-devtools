@@ -18,11 +18,8 @@ use PHPUnit\Framework\TestCase;
 
 final class DevToolsTest extends TestCase
 {
-    /** @var Configuration */
-    private $configuration;
-
-    /** @var DevTools */
-    private $devTools;
+    private Configuration $configuration;
+    private DevTools $devTools;
 
     protected function setUp(): void
     {

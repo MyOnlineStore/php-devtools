@@ -11,8 +11,7 @@ use Symfony\Component\Process\Process;
 
 abstract class DevToolsCommand extends Command
 {
-    /** @var Configuration */
-    protected $configuration;
+    protected Configuration $configuration;
 
     public function __construct(Configuration $configuration)
     {

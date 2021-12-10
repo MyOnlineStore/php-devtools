@@ -9,20 +9,18 @@ use MyOnlineStore\DevTools\Command\DevToolsCommand;
 final class Configuration
 {
     private const PHP_VERSIONS = [
-        '7.2',
         '7.4',
         '8.0',
         '8.1',
     ];
 
     /** @var array<string, class-string<DevToolsCommand>>|null */
-    private $enabledTools;
+    private ?array $enabledTools;
 
     /** @var list<string>|null */
-    private $phpVersions;
+    private ?array $phpVersions;
 
-    /** @var string */
-    private $rootDir;
+    private string $rootDir;
 
     public function __construct()
     {
@@ -49,7 +47,12 @@ final class Configuration
     private function gatherPhpVersions(): array
     {
         /** @var array<array-key, mixed> $composer */
-        $composer = \json_decode(\file_get_contents($this->rootDir . 'composer.json'), true);
+        $composer = \json_decode(
+            \file_get_contents($this->rootDir . 'composer.json'),
+            true,
+            512,
+            JSON_THROW_ON_ERROR
+        );
 
         if (!isset($composer['require']['php'])) {
             throw new \RuntimeException('Required PHP version not specified in composer.json');

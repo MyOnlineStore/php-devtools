@@ -16,8 +16,7 @@ final class ListToolsCommand extends Command
     /** @var string|null */
     protected static $defaultDescription = 'Lists enabled tools (in JSON).';
 
-    /** @var Configuration */
-    private $configuration;
+    private Configuration $configuration;
 
     public function __construct(Configuration $configuration)
     {
@@ -28,7 +27,7 @@ final class ListToolsCommand extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        $output->write(\json_encode(\array_keys($this->configuration->getEnabledTools())));
+        $output->write(\json_encode(\array_keys($this->configuration->getEnabledTools()), JSON_THROW_ON_ERROR));
 
         return 0;
     }

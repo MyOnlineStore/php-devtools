@@ -16,8 +16,7 @@ final class ListPhpVersionsCommand extends Command
     /** @var string|null */
     protected static $defaultDescription = 'Lists PHP versions allowed by composer.json (in JSON format).';
 
-    /** @var Configuration */
-    private $configuration;
+    private Configuration $configuration;
 
     public function __construct(Configuration $configuration)
     {
@@ -28,7 +27,7 @@ final class ListPhpVersionsCommand extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        $output->write(\json_encode($this->configuration->getPhpVersions()));
+        $output->write(\json_encode($this->configuration->getPhpVersions(), JSON_THROW_ON_ERROR));
 
         return 0;
     }

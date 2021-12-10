@@ -16,8 +16,7 @@ use Symfony\Component\Console\Command\Command;
 
 final class DevTools
 {
-    /** @var Configuration */
-    private $configuration;
+    private Configuration $configuration;
 
     public function __construct(Configuration $configuration)
     {
