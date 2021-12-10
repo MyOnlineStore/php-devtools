@@ -27,7 +27,7 @@ final class ListPhpVersionsCommand extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        $output->write(\json_encode($this->configuration->getPhpVersions(), JSON_THROW_ON_ERROR));
+        $output->write(\json_encode($this->configuration->getPhpVersions(), \JSON_THROW_ON_ERROR));
 
         return 0;
     }

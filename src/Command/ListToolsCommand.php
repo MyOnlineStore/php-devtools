@@ -27,7 +27,7 @@ final class ListToolsCommand extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        $output->write(\json_encode(\array_keys($this->configuration->getEnabledTools()), JSON_THROW_ON_ERROR));
+        $output->write(\json_encode(\array_keys($this->configuration->getEnabledTools()), \JSON_THROW_ON_ERROR));
 
         return 0;
     }

@@ -15,10 +15,10 @@ final class Configuration
     ];
 
     /** @var array<string, class-string<DevToolsCommand>>|null */
-    private ?array $enabledTools;
+    private $enabledTools;
 
     /** @var list<string>|null */
-    private ?array $phpVersions;
+    private $phpVersions;
 
     private string $rootDir;
 
@@ -51,7 +51,7 @@ final class Configuration
             \file_get_contents($this->rootDir . 'composer.json'),
             true,
             512,
-            JSON_THROW_ON_ERROR
+            \JSON_THROW_ON_ERROR
         );
 
         if (!isset($composer['require']['php'])) {
