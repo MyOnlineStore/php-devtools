@@ -5,6 +5,7 @@ namespace MyOnlineStore\DevTools\Tests;
 
 use MyOnlineStore\DevTools\Command\AnalyzeCommand;
 use MyOnlineStore\DevTools\Command\CodesnifferCommand;
+use MyOnlineStore\DevTools\Command\DoctrineMigrationsCommand;
 use MyOnlineStore\DevTools\Command\LintSymfonyContainerCommand;
 use MyOnlineStore\DevTools\Command\LintYamlCommand;
 use MyOnlineStore\DevTools\Command\ListPhpVersionsCommand;
@@ -34,6 +35,7 @@ final class DevToolsTest extends TestCase
             [
                 new AnalyzeCommand($this->configuration),
                 new CodesnifferCommand($this->configuration),
+                new DoctrineMigrationsCommand($this->configuration),
                 new LintSymfonyContainerCommand($this->configuration),
                 new LintYamlCommand($this->configuration),
                 new ListToolsCommand($this->configuration),
@@ -44,5 +46,13 @@ final class DevToolsTest extends TestCase
             ],
             $this->devTools->getCommands()
         );
+    }
+
+    public function testListPhpVersion(): void
+    {
+        \chdir(\dirname(__DIR__));
+        $phpVersions = \exec('./bin/devtools list:php-versions');
+
+        self::assertStringContainsString(\PHP_MAJOR_VERSION . '.' . \PHP_MINOR_VERSION, $phpVersions);
     }
 }

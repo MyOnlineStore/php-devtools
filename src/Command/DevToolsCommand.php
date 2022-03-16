@@ -22,23 +22,35 @@ abstract class DevToolsCommand extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        $process = new Process(
-            \array_merge(
-                $this->getCommand(),
-                (array) ($input->getArguments()['args'] ?? [])
-            ),
-            null,
-            null,
-            null,
-            null
-        );
-        $process->start();
+        $commands = $this->getMultiCommand();
 
-        return $process->wait(
-            static function (string $_type, string $buffer) use ($output): void {
-                $output->write($buffer);
-            }
-        );
+        if (0 === \count($commands)) {
+            $commands[] = $this->getCommand();
+        }
+
+        $exitCode = 0;
+
+        foreach ($commands as $command) {
+            $process = new Process(
+                \array_merge(
+                    $command,
+                    (array) ($input->getArguments()['args'] ?? [])
+                ),
+                null,
+                null,
+                null,
+                null
+            );
+            $process->start();
+
+            $exitCode |= $process->wait(
+                static function (string $_type, string $buffer) use ($output): void {
+                    $output->write($buffer);
+                }
+            );
+        }
+
+        return $exitCode;
     }
 
     protected function withBinPath(string $command): string
@@ -56,5 +68,16 @@ abstract class DevToolsCommand extends Command
     /**
      * @return list<string>
      */
-    abstract protected function getCommand(): array;
+    protected function getCommand(): array
+    {
+        return [];
+    }
+
+    /**
+     * @return list<list<string>>
+     */
+    protected function getMultiCommand(): array
+    {
+        return [];
+    }
 }
