@@ -3,4 +3,5 @@
 .phpcs-cache
 .phpunit.result.cache
 composer.lock
+infection-log.txt
 vendor
