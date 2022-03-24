@@ -24,6 +24,7 @@ final class DoctrineMigrationsCommand extends DevToolsCommand
             [
                 $this->withBinPath('console'),
                 'doctrine:migrations:migrate',
+                '--allow-no-migration',
                 '--no-interaction',
                 '--env=test',
             ],
@@ -32,6 +33,7 @@ final class DoctrineMigrationsCommand extends DevToolsCommand
                 $this->withBinPath('console'),
                 'doctrine:migrations:migrate',
                 'first',
+                '--allow-no-migration',
                 '--no-interaction',
                 '--env=test',
             ],
@@ -39,6 +41,7 @@ final class DoctrineMigrationsCommand extends DevToolsCommand
             [
                 $this->withBinPath('console'),
                 'doctrine:migrations:migrate',
+                '--allow-no-migration',
                 '--no-interaction',
                 '--env=test',
             ],
