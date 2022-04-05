@@ -7,6 +7,7 @@ use MyOnlineStore\DevTools\Configuration;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Process\Process;
 
 final class AnalyzeCommand extends Command
 {
@@ -24,12 +25,32 @@ final class AnalyzeCommand extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        $exitCode = 0;
-        $application = $this->getApplication();
-        \assert(null !== $application);
+        $enabledTools = $this->configuration->getEnabledTools();
 
-        foreach ($this->configuration->getEnabledTools() as $name => $_command) {
-            $exitCode |= $application->find($name)->run($input, $output);
+        $runningProcesses = [];
+
+        foreach ($enabledTools as $name => $_command) {
+            $process = new Process([__DIR__ . '/../../bin/devtools', $name]);
+            $process->start();
+
+            $runningProcesses[] = $process;
+        }
+
+        $exitCode = 0;
+
+        while (\count($runningProcesses)) {
+            foreach ($runningProcesses as $i => $runningProcess) {
+                // specific process is finished, so we remove it
+                if (!$runningProcess->isRunning()) {
+                    $exitCode |= (int) $runningProcess->getExitCode();
+
+                    $output->write($runningProcess->getOutput());
+
+                    unset($runningProcesses[$i]);
+                }
+
+                \usleep(500);
+            }
         }
 
         return $exitCode;
