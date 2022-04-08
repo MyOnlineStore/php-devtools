@@ -54,6 +54,5 @@ final class DevToolsTest extends TestCase
         $phpVersions = \exec('./bin/devtools list:php-versions');
 
         self::assertStringContainsString(\PHP_MAJOR_VERSION . '.' . \PHP_MINOR_VERSION, $phpVersions);
-        self::fail('boo');
     }
 }
