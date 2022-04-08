@@ -20,7 +20,6 @@ final class DoctrineMigrationsCommand extends DevToolsCommand
     protected function getMultiProcess(InputInterface $input): array
     {
         return [
-            null,
             // Ensure we're up-to-date
             new Process(
                 [
