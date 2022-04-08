@@ -16,12 +16,9 @@ final class AnalyzeCommand extends Command
     /** @var string|null */
     protected static $defaultDescription = 'Run all enabled tools.';
 
-    private Configuration $configuration;
-
-    public function __construct(Configuration $configuration)
-    {
-        $this->configuration = $configuration;
-
+    public function __construct(
+        private Configuration $configuration,
+    ) {
         parent::__construct();
     }
 

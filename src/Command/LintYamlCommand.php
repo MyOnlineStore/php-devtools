@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace MyOnlineStore\DevTools\Command;
 
 use MyOnlineStore\DevTools\Configuration;
+use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Process\Process;
 
 final class LintYamlCommand extends DevToolsCommand
@@ -14,17 +15,17 @@ final class LintYamlCommand extends DevToolsCommand
     /** @var string|null */
     protected static $defaultDescription = 'Lint YAML';
 
-    /**
-     * @inheritDoc
-     */
-    protected function getCommand(): array
+    protected function getProcess(InputInterface $input): Process
     {
-        return [
-            $this->withBinPath('console'),
-            'lint:yaml',
-            'config',
-            '--parse-tags',
-        ];
+        return new Process(
+            [
+                $this->withBinPath('console'),
+                'lint:yaml',
+                'config',
+                '--parse-tags',
+            ],
+            timeout: null,
+        );
     }
 
     public static function isAvailable(Configuration $configuration): bool

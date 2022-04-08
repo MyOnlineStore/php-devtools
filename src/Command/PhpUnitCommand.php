@@ -4,6 +4,8 @@ declare(strict_types=1);
 namespace MyOnlineStore\DevTools\Command;
 
 use MyOnlineStore\DevTools\Configuration;
+use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Process\Process;
 
 final class PhpUnitCommand extends DevToolsCommand
 {
@@ -16,11 +18,17 @@ final class PhpUnitCommand extends DevToolsCommand
     /**
      * @inheritDoc
      */
-    protected function getCommand(): array
+    protected function getMultiProcess(InputInterface $input): array
     {
-        return [
-            $this->withVendorBinPath('phpunit'),
-        ];
+        $processes = [];
+
+        if ($this->isGitHubFormat($input)) {
+            $processes[] = new Process(['echo', '"::add-matcher::${{ runner.tool_cache }}/phpunit.json"']);
+        }
+
+        $processes[] = new Process([$this->withVendorBinPath('phpunit')], timeout: null);
+
+        return $processes;
     }
 
     public static function isAvailable(Configuration $configuration): bool

@@ -9,16 +9,15 @@ use MyOnlineStore\DevTools\Command\DevToolsCommand;
 final class Configuration
 {
     private const PHP_VERSIONS = [
-        '7.4',
         '8.0',
         '8.1',
     ];
 
     /** @var array<string, class-string<DevToolsCommand>>|null */
-    private $enabledTools;
+    private ?array $enabledTools = null;
 
     /** @var list<string>|null */
-    private $phpVersions;
+    private ?array $phpVersions = null;
 
     private string $rootDir;
 

@@ -4,6 +4,8 @@ declare(strict_types=1);
 namespace MyOnlineStore\DevTools\Command;
 
 use MyOnlineStore\DevTools\Configuration;
+use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Process\Process;
 
 final class RoaveInfectionCommand extends DevToolsCommand
 {
@@ -13,16 +15,17 @@ final class RoaveInfectionCommand extends DevToolsCommand
     /** @var string|null */
     protected static $defaultDescription = 'Roave Infection';
 
-    /**
-     * @inheritDoc
-     */
-    protected function getCommand(): array
+    protected function getProcess(InputInterface $input): Process
     {
-        return [
-            $this->withVendorBinPath('roave-infection-static-analysis-plugin'),
-            '--only-covered',
-            '--show-mutations',
-        ];
+        return new Process(
+            [
+                $this->withVendorBinPath('roave-infection-static-analysis-plugin'),
+                '--only-covered',
+                '--show-mutations',
+            ],
+            env: ['XDEBUG_MODE' => 'coverage'],
+            timeout: null,
+        );
     }
 
     public static function isAvailable(Configuration $configuration): bool

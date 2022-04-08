@@ -33,6 +33,7 @@ jobs:
             -   uses: shivammathur/setup-php@v2
                 with:
                     php-version: ${{ matrix.php-version }}
+                    tools: cs2pr
             -   uses: ramsey/composer-install@v2
 
-            -   run: bin/devtools ${{ matrix.tool }}
+            -   run: bin/devtools ${{ matrix.tool }} --format=github

@@ -4,47 +4,56 @@ declare(strict_types=1);
 namespace MyOnlineStore\DevTools\Command;
 
 use MyOnlineStore\DevTools\Configuration;
+use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Process\Process;
 
 final class DoctrineMigrationsCommand extends DevToolsCommand
 {
     /** @var string|null */
     protected static $defaultName = 'doctrine-migrations';
-
     /** @var string|null */
     protected static $defaultDescription = 'Doctrine Migrations, always runs in test environment';
 
     /**
      * @inheritDoc
      */
-    protected function getMultiCommand(): array
+    protected function getMultiProcess(InputInterface $input): array
     {
         return [
             // Ensure we're up-to-date
-            [
-                $this->withBinPath('console'),
-                'doctrine:migrations:migrate',
-                '--allow-no-migration',
-                '--no-interaction',
-                '--env=test',
-            ],
+            new Process(
+                [
+                    $this->withBinPath('console'),
+                    'doctrine:migrations:migrate',
+                    '--allow-no-migration',
+                    '--no-interaction',
+                    '--env=test',
+                ],
+                timeout: null,
+            ),
             // Test all down patches
-            [
-                $this->withBinPath('console'),
-                'doctrine:migrations:migrate',
-                'first',
-                '--allow-no-migration',
-                '--no-interaction',
-                '--env=test',
-            ],
+            new Process(
+                [
+                    $this->withBinPath('console'),
+                    'doctrine:migrations:migrate',
+                    'first',
+                    '--allow-no-migration',
+                    '--no-interaction',
+                    '--env=test',
+                ],
+                timeout: null,
+            ),
             // Test all migrations ánd if down patches did their job
-            [
-                $this->withBinPath('console'),
-                'doctrine:migrations:migrate',
-                '--allow-no-migration',
-                '--no-interaction',
-                '--env=test',
-            ],
+            new Process(
+                [
+                    $this->withBinPath('console'),
+                    'doctrine:migrations:migrate',
+                    '--allow-no-migration',
+                    '--no-interaction',
+                    '--env=test',
+                ],
+                timeout: null,
+            ),
         ];
     }
 
