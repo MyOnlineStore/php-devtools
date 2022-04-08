@@ -35,5 +35,6 @@ jobs:
                     php-version: ${{ matrix.php-version }}
                     tools: cs2pr
             -   uses: ramsey/composer-install@v2
+            -   run: echo "::add-matcher::${{ runner.tool_cache }}/phpunit.json"
 
             -   run: bin/devtools ${{ matrix.tool }} --format=github

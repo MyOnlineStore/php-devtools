@@ -15,20 +15,12 @@ final class PhpUnitCommand extends DevToolsCommand
     /** @var string|null */
     protected static $defaultDescription = 'PHP Unit';
 
-    /**
-     * @inheritDoc
-     */
-    protected function getMultiProcess(InputInterface $input): array
+    protected function getProcess(InputInterface $input): Process
     {
-        $processes = [];
-
-        if ($this->isGitHubFormat($input)) {
-            $processes[] = new Process(['echo', '"::add-matcher::${{ runner.tool_cache }}/phpunit.json"']);
-        }
-
-        $processes[] = new Process([$this->withVendorBinPath('phpunit')], timeout: null);
-
-        return $processes;
+        return new Process(
+            [$this->withVendorBinPath('phpunit')],
+            timeout: null,
+        );
     }
 
     public static function isAvailable(Configuration $configuration): bool
