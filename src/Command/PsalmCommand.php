@@ -17,7 +17,10 @@ final class PsalmCommand extends DevToolsCommand
 
     protected function getProcess(InputInterface $input): Process
     {
-        $command = [$this->withVendorBinPath('psalm')];
+        $command = [
+            $this->withVendorBinPath('psalm'),
+            '--threads=' . $this->configuration->getThreads(),
+        ];
 
         if ($this->isGitHubFormat($input)) {
             $command[] = '--output-format=github';

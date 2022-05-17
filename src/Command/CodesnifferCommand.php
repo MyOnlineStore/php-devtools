@@ -19,13 +19,20 @@ final class CodesnifferCommand extends DevToolsCommand
     {
         if ($this->isGitHubFormat($input)) {
             return Process::fromShellCommandline(
-                $this->withVendorBinPath('phpcs') . ' -q --report=checkstyle | cs2pr',
+                \sprintf(
+                    '%s -q --parallel=%s --report=checkstyle | cs2pr',
+                    $this->withVendorBinPath('phpcs'),
+                    $this->configuration->getThreads(),
+                ),
                 timeout: null,
             );
         }
 
         return new Process(
-            [$this->withVendorBinPath('phpcs')],
+            [
+                $this->withVendorBinPath('phpcs'),
+                '--parallel=' . $this->configuration->getThreads(),
+            ],
             timeout: null,
         );
     }

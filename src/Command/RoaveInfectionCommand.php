@@ -17,15 +17,18 @@ final class RoaveInfectionCommand extends DevToolsCommand
 
     protected function getProcess(InputInterface $input): Process
     {
-        return new Process(
-            [
-                $this->withVendorBinPath('roave-infection-static-analysis-plugin'),
-                '--only-covered',
-                '--show-mutations',
-            ],
-            env: ['XDEBUG_MODE' => 'coverage'],
-            timeout: null,
-        );
+        $command = [
+            $this->withVendorBinPath('roave-infection-static-analysis-plugin'),
+            '--threads=' . $this->configuration->getThreads(),
+            '--only-covered',
+            '--show-mutations',
+        ];
+
+        if ($this->isGitHubFormat($input)) {
+            $command[] = '--logger-github';
+        }
+
+        return new Process($command, env: ['XDEBUG_MODE' => 'coverage'], timeout: null);
     }
 
     public static function isAvailable(Configuration $configuration): bool

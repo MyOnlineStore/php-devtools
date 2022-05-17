@@ -5,6 +5,7 @@ namespace MyOnlineStore\DevTools;
 
 use Composer\Semver\Semver;
 use MyOnlineStore\DevTools\Command\DevToolsCommand;
+use Symfony\Component\Process\Process;
 
 final class Configuration
 {
@@ -20,6 +21,7 @@ final class Configuration
     private ?array $phpVersions = null;
 
     private string $rootDir;
+    private ?string $threads = null;
 
     public function __construct()
     {
@@ -38,6 +40,55 @@ final class Configuration
         }
 
         throw new \RuntimeException('Unable to determine project root');
+    }
+
+    /**
+     * @return array<string, class-string<DevToolsCommand>>
+     */
+    public function getEnabledTools(): array
+    {
+        if (null === $this->enabledTools) {
+            $this->enabledTools = $this->gatherEnabledTools();
+        }
+
+        return $this->enabledTools;
+    }
+
+    /**
+     * @return list<string>
+     */
+    public function getPhpVersions(): array
+    {
+        if (null === $this->phpVersions) {
+            $this->phpVersions = $this->gatherPhpVersions();
+        }
+
+        return $this->phpVersions;
+    }
+
+    public function getRootDir(): string
+    {
+        return $this->rootDir;
+    }
+
+    public function getThreads(): string
+    {
+        if (null === $this->threads) {
+            $this->threads = $this->determineThreads();
+        }
+
+        return $this->threads;
+    }
+
+    private function determineThreads(): string
+    {
+        return \trim(
+            match (\php_uname('s')) {
+                'Linux' => Process::fromShellCommandline('nproc')->mustRun()->getOutput(),
+                'Darwin' => Process::fromShellCommandline('sysctl -n hw.logicalcpu')->mustRun()->getOutput(),
+                default => '2',
+            }
+        );
     }
 
     /**
@@ -110,34 +161,5 @@ final class Configuration
         }
 
         return $enabledTools;
-    }
-
-    /**
-     * @return array<string, class-string<DevToolsCommand>>
-     */
-    public function getEnabledTools(): array
-    {
-        if (null === $this->enabledTools) {
-            $this->enabledTools = $this->gatherEnabledTools();
-        }
-
-        return $this->enabledTools;
-    }
-
-    /**
-     * @return list<string>
-     */
-    public function getPhpVersions(): array
-    {
-        if (null === $this->phpVersions) {
-            $this->phpVersions = $this->gatherPhpVersions();
-        }
-
-        return $this->phpVersions;
-    }
-
-    public function getRootDir(): string
-    {
-        return $this->rootDir;
     }
 }
