@@ -7,6 +7,7 @@ use MyOnlineStore\DevTools\Configuration;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
 #[AsCommand('analyze', 'Run all enabled tools.')]
@@ -16,6 +17,27 @@ final class AnalyzeCommand extends Command
         private readonly Configuration $configuration,
     ) {
         parent::__construct();
+    }
+
+    protected function configure(): void
+    {
+        $this->addOption(
+            'working-dir',
+            null,
+            InputOption::VALUE_OPTIONAL,
+            'Working directory, relative to project root.',
+        );
+    }
+
+    protected function initialize(InputInterface $input, OutputInterface $output): void
+    {
+        if (null === $workingDir = $input->getOption('working-dir')) {
+            return;
+        }
+
+        \assert(\is_string($workingDir));
+
+        $this->configuration->setWorkingDir($workingDir);
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int
