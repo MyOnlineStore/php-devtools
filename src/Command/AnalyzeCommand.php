@@ -13,7 +13,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 final class AnalyzeCommand extends Command
 {
     public function __construct(
-        private Configuration $configuration,
+        private readonly Configuration $configuration,
     ) {
         parent::__construct();
     }

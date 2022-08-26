@@ -25,7 +25,7 @@ final class PhpUnitCommand extends DevToolsCommand
             return false;
         }
 
-        return \is_file($configuration->getRootDir() . 'phpunit.xml.dist')
-            || \is_file($configuration->getRootDir() . 'phpunit.xml');
+        return \is_file($configuration->getWorkingDir() . 'phpunit.xml.dist')
+            || \is_file($configuration->getWorkingDir() . 'phpunit.xml');
     }
 }

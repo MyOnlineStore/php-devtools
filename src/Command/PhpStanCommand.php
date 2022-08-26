@@ -30,7 +30,7 @@ final class PhpStanCommand extends DevToolsCommand
             return false;
         }
 
-        return \is_file($configuration->getRootDir() . 'phpstan.neon.dist')
-            || \is_file($configuration->getRootDir() . 'phpstan.neon');
+        return \is_file($configuration->getWorkingDir() . 'phpstan.neon.dist')
+            || \is_file($configuration->getWorkingDir() . 'phpstan.neon');
     }
 }

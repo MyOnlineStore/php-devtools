@@ -27,13 +27,13 @@ final class LintYamlCommand extends DevToolsCommand
     public static function isAvailable(Configuration $configuration): bool
     {
         if (
-            !\is_file($configuration->getRootDir() . 'bin/console') ||
-            !\is_dir($configuration->getRootDir() . 'config')
+            !\is_file($configuration->getWorkingDir() . 'bin/console') ||
+            !\is_dir($configuration->getWorkingDir() . 'config')
         ) {
             return false;
         }
 
-        $process = new Process([$configuration->getRootDir() . 'bin/console', 'list']);
+        $process = new Process([$configuration->getWorkingDir() . 'bin/console', 'list']);
         $process->run();
 
         return \str_contains($process->getOutput(), 'lint:yaml');

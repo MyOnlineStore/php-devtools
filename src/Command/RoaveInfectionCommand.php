@@ -33,7 +33,7 @@ final class RoaveInfectionCommand extends DevToolsCommand
             return false;
         }
 
-        return \is_file($configuration->getRootDir() . 'infection.json.dist')
-            || \is_file($configuration->getRootDir() . 'infection.json');
+        return \is_file($configuration->getWorkingDir() . 'infection.json.dist')
+            || \is_file($configuration->getWorkingDir() . 'infection.json');
     }
 }

@@ -31,7 +31,7 @@ final class PsalmCommand extends DevToolsCommand
             return false;
         }
 
-        return \is_file($configuration->getRootDir() . 'psalm.xml.dist')
-            || \is_file($configuration->getRootDir() . 'psalm.xml');
+        return \is_file($configuration->getWorkingDir() . 'psalm.xml.dist')
+            || \is_file($configuration->getWorkingDir() . 'psalm.xml');
     }
 }

@@ -54,11 +54,11 @@ final class DoctrineMigrationsCommand extends DevToolsCommand
 
     public static function isAvailable(Configuration $configuration): bool
     {
-        if (!\is_file($configuration->getRootDir() . 'bin/console')) {
+        if (!\is_file($configuration->getWorkingDir() . 'bin/console')) {
             return false;
         }
 
-        $process = new Process([$configuration->getRootDir() . 'bin/console', 'list', '--env=test']);
+        $process = new Process([$configuration->getWorkingDir() . 'bin/console', 'list', '--env=test']);
         $process->run();
 
         return \str_contains($process->getOutput(), 'doctrine:migrations:migrate');

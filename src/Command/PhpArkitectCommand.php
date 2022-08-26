@@ -25,6 +25,6 @@ final class PhpArkitectCommand extends DevToolsCommand
             return false;
         }
 
-        return \is_file($configuration->getRootDir() . 'phparkitect.php');
+        return \is_file($configuration->getWorkingDir() . 'phparkitect.php');
     }
 }

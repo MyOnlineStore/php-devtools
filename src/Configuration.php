@@ -21,6 +21,7 @@ final class Configuration
     private array|null $phpVersions = null;
 
     private string $rootDir;
+    private string|null $workingDir = null;
     private string|null $threads = null;
 
     public function __construct()
@@ -40,6 +41,11 @@ final class Configuration
         }
 
         throw new \RuntimeException('Unable to determine project root');
+    }
+
+    public function setWorkingDir(string $workingDir): void
+    {
+        $this->workingDir = $this->rootDir . \trim($workingDir, '/') . '/';
     }
 
     /** @return array<string, class-string<DevToolsCommand>> */
@@ -74,6 +80,11 @@ final class Configuration
         }
 
         return $this->threads;
+    }
+
+    public function getWorkingDir(): string
+    {
+        return $this->workingDir ?? $this->rootDir;
     }
 
     private function determineThreads(): string

@@ -26,6 +26,23 @@ abstract class DevToolsCommand extends Command
             InputOption::VALUE_OPTIONAL,
             'Output format to use (by supported commands).',
         );
+        $this->addOption(
+            'working-dir',
+            null,
+            InputOption::VALUE_OPTIONAL,
+            'Working directory, relative to project root.',
+        );
+    }
+
+    protected function initialize(InputInterface $input, OutputInterface $output): void
+    {
+        if (null === $workingDir = $input->getOption('working-dir')) {
+            return;
+        }
+
+        \assert(\is_string($workingDir));
+
+        $this->configuration->setWorkingDir($workingDir);
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int
@@ -71,7 +88,7 @@ abstract class DevToolsCommand extends Command
 
     protected function withBinPath(string $command): string
     {
-        return $this->configuration->getRootDir() . 'bin/' . $command;
+        return $this->configuration->getWorkingDir() . 'bin/' . $command;
     }
 
     protected function withVendorBinPath(string $command): string

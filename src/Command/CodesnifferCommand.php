@@ -39,7 +39,7 @@ final class CodesnifferCommand extends DevToolsCommand
             return false;
         }
 
-        return \is_file($configuration->getRootDir() . 'phpcs.xml.dist')
-            || \is_file($configuration->getRootDir() . 'phpcs.xml');
+        return \is_file($configuration->getWorkingDir() . 'phpcs.xml.dist')
+            || \is_file($configuration->getWorkingDir() . 'phpcs.xml');
     }
 }
