@@ -22,6 +22,12 @@ final class AnalyzeCommand extends Command
     protected function configure(): void
     {
         $this->addOption(
+            'format',
+            null,
+            InputOption::VALUE_OPTIONAL,
+            'Output format to use (by supported commands).',
+        );
+        $this->addOption(
             'working-dir',
             null,
             InputOption::VALUE_OPTIONAL,
