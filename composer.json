@@ -26,7 +26,7 @@
         "symfony/process": "^5.4 || ^6.0"
     },
     "require-dev": {
-        "myonlinestore/coding-standard": "dev-doctrine-cs-10",
+        "myonlinestore/coding-standard": "^4.0",
         "doctrine/coding-standard": "10.0.x-dev",
         "phpunit/phpunit": "^9.5",
         "roave/infection-static-analysis-plugin": "^1.19",

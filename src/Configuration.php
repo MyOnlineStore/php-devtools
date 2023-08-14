@@ -10,19 +10,19 @@ use Symfony\Component\Process\Process;
 final class Configuration
 {
     private const PHP_VERSIONS = [
-        '8.0',
         '8.1',
+        '8.2',
     ];
 
     /** @var array<string, class-string<DevToolsCommand>>|null */
-    private array|null $enabledTools = null;
+    private array | null $enabledTools = null;
 
     /** @var list<string>|null */
-    private array|null $phpVersions = null;
+    private array | null $phpVersions = null;
 
     private string $rootDir;
-    private string|null $workingDir = null;
-    private string|null $threads = null;
+    private string | null $workingDir = null;
+    private string | null $threads = null;
 
     public function __construct()
     {
