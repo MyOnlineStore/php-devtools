@@ -15,7 +15,6 @@ use MyOnlineStore\DevTools\Command\PhpArkitectCommand;
 use MyOnlineStore\DevTools\Command\PhpStanCommand;
 use MyOnlineStore\DevTools\Command\PhpUnitCommand;
 use MyOnlineStore\DevTools\Command\PsalmCommand;
-use MyOnlineStore\DevTools\Command\RoaveInfectionCommand;
 use MyOnlineStore\DevTools\Configuration;
 use MyOnlineStore\DevTools\DevTools;
 use PHPUnit\Framework\TestCase;
@@ -48,7 +47,6 @@ final class DevToolsTest extends TestCase
                 new PhpStanCommand($this->configuration),
                 new PhpUnitCommand($this->configuration),
                 new PsalmCommand($this->configuration),
-                new RoaveInfectionCommand($this->configuration),
             ],
             $this->devTools->getCommands(),
         );

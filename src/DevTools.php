@@ -15,7 +15,6 @@ use MyOnlineStore\DevTools\Command\PhpArkitectCommand;
 use MyOnlineStore\DevTools\Command\PhpStanCommand;
 use MyOnlineStore\DevTools\Command\PhpUnitCommand;
 use MyOnlineStore\DevTools\Command\PsalmCommand;
-use MyOnlineStore\DevTools\Command\RoaveInfectionCommand;
 use Symfony\Component\Console\Command\Command;
 
 final class DevTools
@@ -41,7 +40,6 @@ final class DevTools
             new PhpStanCommand($this->configuration),
             new PhpUnitCommand($this->configuration),
             new PsalmCommand($this->configuration),
-            new RoaveInfectionCommand($this->configuration),
         ];
     }
 }
