@@ -31,7 +31,7 @@
         "phpunit/phpunit": "^9.5",
         "roave/infection-static-analysis-plugin": "^1.19",
         "roave/security-advisories": "dev-latest",
-        "vimeo/psalm": "^4.23",
+        "vimeo/psalm": "^5.0",
         "phpstan/phpstan": "^1.7",
         "phpstan/phpstan-phpunit": "^1.1",
         "phparkitect/phparkitect": "^0.2.21"
